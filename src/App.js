@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import dashboard from './component/userDashboard/Dashboard';
 import {Link, Route,Switch,withRouter} from 'react-router-dom';
 import loginPage from './component/login/loginPage';
 class App extends Component {
@@ -9,6 +10,7 @@ class App extends Component {
       <div>
         <Switch>
           <Route exact path="/" component={loginPage}/>
+          <Route exact path="/dashboard" component={dashboard}/>
         </Switch>
       </div>
     );

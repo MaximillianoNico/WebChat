@@ -1,46 +1,37 @@
 import React, {Component} from 'react';
 import './src/style.scss';
+import {Route,Switch} from 'react-router-dom';
+import {connect} from 'react-redux';
+import action from './../src/action';
+import SignIn from './signIn';
+import Register from './register';
 
 class loginPage extends Component{
+    
+    
+    CreateUserWithEmailAndPassword= (e) =>{
+        alert("Register");
+    }
+    moveToRegister = () =>{
+        this.props.dispatch(
+            action.moveToRegister()
+        )
+    }
     render(){
         return(
             <div className="container-fluid">
-                <center class="contain-box">
+                <center className="contain-box">
                     <div className="col-lg-8">
                         <div className="row">
                                 <div className="col-lg-5 jumbotron right">
-                                    <i class="fas fa-comments"></i>
+                                    <i className="fas fa-comments"></i>
                                     <h1>WebChat</h1>
                                 </div>
-                                <div className="col-lg-7 jumbotron left">
-                                    <h1>Log In</h1>
-                                    <form className=" mb-3">
-                                        <div class="col-9">
-                                            <label class="sr-only" for="inlineFormInputGroup">Username</label>
-                                            <div class="input-group mb-2">
-                                                <input type="email" class="form-control" id="inlineFormInputGroup" placeholder="Email"/>
-                                            </div>
-                                            <div class="input-group mb-2">
-                                                <input type="password" class="form-control" id="inlineFormInputGroup" placeholder="Password"/>
-                                            </div>
-                                            <button type="submit" className="btn btn-lg btn-primary">Sign In</button>
-                                        </div>
-                                    </form>
-                                    <p><a href="">Register</a> or Sign In With</p>
-                                    <center className="mb-2">
-                                        <div className="row col-6">
-                                            <button className="btn btn-lg btn-primary btn-icons fb-icons">
-                                                <i class="fab fa-facebook-f"></i>
-                                            </button>
-                                            <button className="btn btn-lg btn-icons google-icons">
-                                                <i class="fab fa-google"></i>
-                                            </button>
-                                            <button className="btn btn-lg btn-primary btn-icons instagram-icons">
-                                                <i class="fab fa-facebook-f"></i>
-                                            </button>
-                                        </div>
-                                    </center>
-                                </div>
+                                
+                                    <Switch>
+                                        <Route exact path="/" component={SignIn}/>
+                                        <Route exact path="/register" component={Register}/>
+                                    </Switch>
                             </div>
                     </div>
                 </center>
@@ -49,4 +40,9 @@ class loginPage extends Component{
     }
 }
 
-export default loginPage;
+const mapStateToProps = (state) =>{
+    return{
+        // loginError: state.loginError
+    }
+}
+export default connect(mapStateToProps)(loginPage);

@@ -1,3 +1,6 @@
+import firebase from 'firebase';
+import React, {Component} from 'react';
+
 export default{
     setLoginError(errorText){
         return {
@@ -5,7 +8,28 @@ export default{
             payload:errorText
         }
     },
+    setUser(user){
+        return{
+            type:"SET_USER",
+            payload:user
+        }
+    },
     AuthenticationFirebase(email,password){
-
+        return (dispatch)=>{
+           return window.firebase.auth().signInWithEmailAndPassword(email,password)
+           .then(res =>{
+               alert("Success");
+               return (
+                   dispatch(this.setUser(res.data)),
+                    window.location.href("/dashboard")
+               )
+           })
+           .catch(err=>{
+               alert(err);
+               return(
+                   dispatch(this.setLoginError("Wrong Email or Password"))
+               )
+           })
+        }
     }
 }

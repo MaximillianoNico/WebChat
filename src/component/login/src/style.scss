@@ -2,6 +2,7 @@
 $roboto-sans: 'Roboto', sans-serif;
 $montserrat:'Montserrat', sans-serif;
 
+
 .contain-box{
     margin-top : 10%;
     .form-control{
@@ -18,7 +19,26 @@ $montserrat:'Montserrat', sans-serif;
     }
     form{
         padding-top: 5%;
-        
+        input{
+            display: block;
+            border: none;
+            padding: 10px 0;
+            width: 80%;
+            border-bottom: solid 1px #2196f3;
+            -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+            transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+            background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 96%, #1abc9c 4%);
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #1abc9c 4%);
+            background-position: -200px 0;
+            background-size: 200px 100%;
+            background-repeat: no-repeat;
+            color: #0e6252;
+            text-align: center;
+            &focus{
+                box-shadow: none;
+                outline: none;
+            }
+        }
     }
     .btn-icons{
         width: 50px;
