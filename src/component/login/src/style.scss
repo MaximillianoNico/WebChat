@@ -2,7 +2,6 @@
 $roboto-sans: 'Roboto', sans-serif;
 $montserrat:'Montserrat', sans-serif;
 
-
 .contain-box{
     margin-top : 10%;
     .form-control{
@@ -68,13 +67,17 @@ $montserrat:'Montserrat', sans-serif;
         }
     }    
     .left{
-        background-color: #fafafa;
+        background-color: #f3f0f0;
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
         border-top-right-radius: 50px;
         h1{
             color: #2196f3;
         }
+    }
+    .scrollbar{
+        overflow-y: scroll !important;
+        height: 100%;
     }
 }
 
