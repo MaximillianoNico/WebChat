@@ -8,13 +8,19 @@ class Dashboard extends Component{
             return(
                 <div>
                     <nav className="navbar navbar-dark fixed-top bg-light flex-md-nowrap p-0 shadow">
-                        <div className="navbar-brand col-3 mr-0 bg-dark">
-                            <div style={{float:'left'}}>
-                                {/* <i class="fas fa-user-circle" style={{fontSize:40,padding:10}}></i> */}
-                            </div>
-                            <div className="" style={{float:'right'}}>
-                                <i class="far fa-comments" style={{fontSize:25,paddingTop:20,paddingBottom:20,paddingLeft:10,paddingRight:10}}></i>
-                                <a href="/logout"><i class="fas fa-sign-out-alt"style={{fontSize:25,paddingTop:20,paddingBottom:20,paddingLeft:10,paddingRight:10}}></i></a>
+                        <div className="navbar-brand col-1 mr-0 bg-dark" style={{}}>
+                        <i class="fas fa-user-circle" style={{fontSize:60,padding:9}}></i>
+                        </div>
+                        <div className="navbar-brand col-3 mr-0 bg-grey">
+                            <div className="row" style={{color:'black',float:'left'}}>
+                                <div className="" style={{padding:20}}>
+                                    <form class="form-inline row col-12" style={{margin:0,padding:0}}>
+                                        <input class="form-control col-10" type="search" placeholder="Search" aria-label="Search"/>
+                                        <button class="btn btn-xs btn-outline-success col-2 my-2 my-sm-0" type="submit">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         <div className="navbar-nav w-100" style={{paddingLeft:20}}>
@@ -22,7 +28,7 @@ class Dashboard extends Component{
                                 <div className="col-1">
                                     <i class="fas fa-user-circle" style={{fontSize:60,paddingTop:5}}></i>
                                 </div>
-                                <div className="col-11" style={{paddingTop:5}}>
+                                <div className="col-11" style={{paddingTop:4}}>
                                     <h2>Jhon Doe</h2>
                                     <p style={{margin:0}}>lorem</p>
                                 </div>
@@ -31,16 +37,26 @@ class Dashboard extends Component{
                     </nav>
                     <div className="container-fluid" style={{marginTop:69}}>
                         <div className="row">
-                            <nav className="col-3 d-none d-md-block bg-light sidebar scrollbar" style={{overflowY:'scroll',height:'90vh'}}>
+                            <nav className="col-1 d-none d-md-block bg-dark sidebar scrollbar">
+                                <div className="container-fluid sidebar-sticky" style={{marginTop:150}}>
+                                    <a href="" className="icons-nav">
+                                        <i class="fas fa-comment" style={{fontSize:45,paddingTop:20}}></i>
+                                    </a>
+                                    <a href="" className="icons-nav">
+                                        <i class="fas fa-users" style={{fontSize:45,paddingTop:20}}></i>
+                                    </a>
+                                    <a href="" className="icons-nav">
+                                        <i class="fas fa-newspaper" style={{fontSize:45,paddingTop:20}}></i>
+                                    </a>
+                                    <a href="/logout" className="icons-nav">
+                                        <i class="fas fa-sign-out-alt" style={{fontSize:45,paddingTop:20}}></i>
+                                    </a>
+                                </div>
+                            </nav>
+                            <nav className="col-3 d-none d-md-block bg-grey sidebar scrollbar" style={{overflowY:'scroll',height:'90vh'}}>
                                 <div className="container-fluid sidebar-sticky">
                                     {/* <h1>Menu</h1> */}
-                                    <nav class="navbar navbar-light bg-light" style={{margin:0,paddingTop:20}}>
-                                            <form class="form-inline row col-12" style={{margin:0,padding:0}}>
-                                                <input class="form-control col-10" type="search" placeholder="Search" aria-label="Search"/>
-                                                <button class="btn btn-xs btn-outline-success col-2 my-2 my-sm-0" type="submit">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                            </form>
+                                    <nav class="navbar navbar-light bg-ligth" style={{margin:0,paddingTop:13}}>
                                         </nav>
                                     <div class="sidebar-sticky">
                                         
@@ -200,7 +216,7 @@ class Dashboard extends Component{
                                     </div>
                                 </div>
                             </nav>
-                            <main className="col-9 col-md-9 ml-sm-auto col-lg-9 px-4" style={{padding:10,overflowY:'scroll',overflowX:'hidden',height:'90vh'}} role="main">
+                            <main className="col-8 col-md-8 ml-sm-auto col-lg-8 px-4" style={{padding:10,overflowY:'scroll',overflowX:'hidden',height:'90vh'}} role="main">
                                 <div className="container-fluid" style={{marginTop:100,padding:0}}>
                                 
                                     <div className="container">
@@ -239,7 +255,7 @@ class Dashboard extends Component{
                                                 <button className="btn btn-lg btn-cycle btn-success" style={{textAlign:'center'}}>
                                                     <i class="fas fa-plus" style={{fontSize:24,marginLeft:-7}}></i>
                                                 </button>
-                                                <input className="col-10 form-control form-chat" placeholder="Chatting..."></input>
+                                                <input className="col-9 form-control form-chat" placeholder="Chatting..."></input>
                                                 <button className="btn btn-lg btn-cycle btn-info" style={{textAlign:'center'}}>
                                                     <i class="fab fa-telegram-plane" style={{fontSize:24,marginLeft:-7}}></i>
                                                 </button>

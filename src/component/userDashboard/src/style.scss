@@ -6,3 +6,20 @@
     width: 40px;
     height: 40px;
 }
+a{
+    color: black;
+}x
+.icons-nav{
+    text-decoration: none;
+    color: white;
+    i{
+        transition: 0s ease;
+        color: white;
+        &hover{
+            color: grey;
+        }    
+    }
+}
+.bg-grey{
+    background-color: #e0e0e0;
+}
