@@ -1,6 +1,6 @@
 {
-    "user":[
-        {
+    "user":{
+        "7OB8T9QtT1dg28ICi9OmapEiUtJ2":{
             "name":"Maximilliano",
             "email":"admin@weDev.com",
             "uid":"7OB8T9QtT1dg28ICi9OmapEiUtJ2",
@@ -16,7 +16,7 @@
                 }
             ]
         },
-        {
+        "tQ8yPDdVZxWTl59SJFUNgrlc0tE3":{
             "name":"Jhon Doe",
             "email":"admin@gameDev.com",
             "uid":"tQ8yPDdVZxWTl59SJFUNgrlc0tE3",
@@ -32,9 +32,9 @@
                 }
             ]
         }
-    ],
-    "messenger":[
-        {
+    },
+    "messenger":{
+        "messeger-001":{
             "groupName":"",
             "_idMessenger":"messeger-001",
             "user":[
@@ -62,5 +62,5 @@
                 }
             ]
         }
-    ]
+    }
 }

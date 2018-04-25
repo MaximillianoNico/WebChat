@@ -5,11 +5,13 @@ import firebase from 'firebase';
 import './src/style.scss';
 import action from '../src/action';
 class Dashboard extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
             uid:'',
-            name:''
+            name:'',
+            totalChat:[],
+            userMessenger:[]
         }
     }
 
@@ -21,7 +23,14 @@ class Dashboard extends Component{
                     uid:user.uid
                 })
                 this.OnStateAuth();
-                alert(this.props.uid);
+                alert("Welcome to WebChat : "+this.props.uid);
+
+                var dbUser = firebase.database().ref(`user/${this.props.uid}/`);
+                dbUser.on('value', snapshot =>{
+                    this.setState({
+                        userMessenger:snapshot.val(),
+                    });
+                })
             }else{
                 alert("Please Sign In before use WebChat");
                 window.location.href('/');
@@ -35,6 +44,7 @@ class Dashboard extends Component{
     }
     render(){
         if(this.props.user!= null){
+            console.log(this.state.userMessenger.email+" "+this.state.userMessenger.uid);
             return(
                 <div>
                     <nav className="navbar navbar-dark fixed-top bg-light flex-md-nowrap p-0 shadow">
