@@ -14,6 +14,12 @@ export default{
             payload:user
         }
     },
+    setUID(uid){
+        return{
+            type:"SET_UID",
+            payload:uid
+        }
+    },
     AuthenticationFirebase(email,password){
         return (dispatch)=>{
            return window.firebase.auth().signInWithEmailAndPassword(email,password)
@@ -31,5 +37,11 @@ export default{
                )
            })
         }
+    },
+    OnAuthState(uid){
+        return (dispatch)=>{
+            return dispatch(this.setUID(uid))
+            }
+        }
     }
-}
+    

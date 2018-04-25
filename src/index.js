@@ -20,6 +20,7 @@ window.firebase=firebase;
 firebase.auth().onAuthStateChanged((user)=>{
     if(user){
         store.dispatch(actions.setUser(user));
+        store.dispatch(actions.setUID(user.uid));
     }else{
         store.dispatch(actions.setUser(null));
     }

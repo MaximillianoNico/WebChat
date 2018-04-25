@@ -13,7 +13,7 @@ class logout extends Component{
 
     render(){
         return(
-            <center className="container">
+            <center className="container" style={{marginTop:'50vh'}}>
             <h1>"Logging Out"</h1>
             </center>
         )

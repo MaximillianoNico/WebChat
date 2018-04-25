@@ -1,5 +1,6 @@
 let defaultState={
     user:null,
+    uid:""
 }
 const reducers = (state = defaultState, action)=>{
     switch(action.type){
@@ -10,6 +11,10 @@ const reducers = (state = defaultState, action)=>{
         case "SET_USER":
             return Object.assign({},state,{
                 user:action.payload
+            })
+        case "SET_UID":
+            return Object.assign({},state,{
+                uid:action.payload
             })
         default:
             return state;

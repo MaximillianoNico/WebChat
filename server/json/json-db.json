@@ -1,0 +1,66 @@
+{
+    "user":[
+        {
+            "name":"Maximilliano",
+            "email":"admin@weDev.com",
+            "uid":"7OB8T9QtT1dg28ICi9OmapEiUtJ2",
+            "chat":[
+                {
+                    "_idMessenger":"messenger-001",
+                    "groupName":""
+                }
+            ],
+            "posting":[
+                {
+                    "_idPosting":""
+                }
+            ]
+        },
+        {
+            "name":"Jhon Doe",
+            "email":"admin@gameDev.com",
+            "uid":"tQ8yPDdVZxWTl59SJFUNgrlc0tE3",
+            "chat":[
+                {
+                    "_idMessenger":"messenger-001",
+                    "groupName":""
+                }
+            ],
+            "posting":[
+                {
+                    "_idPosting":""
+                }
+            ]
+        }
+    ],
+    "messenger":[
+        {
+            "groupName":"",
+            "_idMessenger":"messeger-001",
+            "user":[
+                {
+                    "_idUser":"7OB8T9QtT1dg28ICi9OmapEiUtJ2",
+                    "userName":"Maximilliano"
+                },
+                {
+                    "_idUser":"tQ8yPDdVZxWTl59SJFUNgrlc0tE3",
+                    "userName":"Jhon Doe"
+                }
+            ],
+            "chat":[
+                {
+                    "_idUser":"tQ8yPDdVZxWTl59SJFUNgrlc0tE3",
+                    "name":"Jhon Doe",
+                    "content":"Hello, How are you?",
+                    "time":""
+                },
+                {
+                    "_idUser":"7OB8T9QtT1dg28ICi9OmapEiUtJ2",
+                    "name":"Maximilliano",
+                    "content":"I'm fine. I heard you've become a developer, maybe we could work creating a startup?",
+                    "time":""
+                }
+            ]
+        }
+    ]
+}

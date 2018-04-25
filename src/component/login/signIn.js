@@ -19,8 +19,7 @@ class signIn extends Component{
         e.preventDefault();
         let email = e.target.inputEmail.value;
         let password = e.target.inputPassword.value;
-
-        alert(email);
+        // alert(email);
         this.props.dispatch(
             action.AuthenticationFirebase(email,password)
         )
@@ -60,7 +59,7 @@ class signIn extends Component{
                             <i className="fab fa-google"></i>
                         </button>
                         <button className="btn btn-lg btn-primary btn-icons instagram-icons">
-                            <i className="fab fa-facebook-f"></i>
+                            <i className="fab fa-instagram"></i>
                         </button>
                     </div>
                 </center>

@@ -1,8 +1,38 @@
 import React,{Component} from 'react';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
+import firebase from 'firebase';
 import './src/style.scss';
+import action from '../src/action';
 class Dashboard extends Component{
+    constructor(){
+        super();
+        this.state={
+            uid:'',
+            name:''
+        }
+    }
+
+    componentDidMount(){
+        
+        firebase.auth().onAuthStateChanged((user)=>{
+            if(user){           
+                this.setState({
+                    uid:user.uid
+                })
+                this.OnStateAuth();
+                alert(this.props.uid);
+            }else{
+                alert("Please Sign In before use WebChat");
+                window.location.href('/');
+            }
+        })
+    }
+    OnStateAuth(){
+        this.props.dispatch(
+            action.OnAuthState(this.state.uid)
+        )
+    }
     render(){
         if(this.props.user!= null){
             return(
@@ -12,8 +42,8 @@ class Dashboard extends Component{
                         <i class="fas fa-user-circle" style={{fontSize:60,padding:9}}></i>
                         </div>
                         <div className="navbar-brand col-3 mr-0 bg-grey">
-                            <div className="row" style={{color:'black',float:'left'}}>
-                                <div className="" style={{padding:20}}>
+                            <div className="row" style={{color:'black'}}>
+                                <div className="container-fluid" style={{padding:20}}>
                                     <form class="form-inline row col-12" style={{margin:0,padding:0}}>
                                         <input class="form-control col-10" type="search" placeholder="Search" aria-label="Search"/>
                                         <button class="btn btn-xs btn-outline-success col-2 my-2 my-sm-0" type="submit">
@@ -55,90 +85,86 @@ class Dashboard extends Component{
                             </nav>
                             <nav className="col-3 d-none d-md-block bg-grey sidebar scrollbar" style={{overflowY:'scroll',height:'90vh'}}>
                                 <div className="container-fluid sidebar-sticky">
-                                    {/* <h1>Menu</h1> */}
-                                    <nav class="navbar navbar-light bg-ligth" style={{margin:0,paddingTop:13}}>
-                                        </nav>
-                                    <div class="sidebar-sticky">
-                                        
-                                        <ul class="nav flex-column">
-                                            <li class="nav-item">
-                                                <a class="nav-link active " href="#">
+                                    <div className="sidebar-sticky">
+                                        <ul className="nav flex-column">
+                                            <li className="nav-item">
+                                                <a className="nav-link active " href="#">
                                                     <div className="row" style={{paddingTop:15,paddingBottom:0}}>
-                                                        <i class="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
+                                                        <i className="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
                                                         <div className="col-8">
-                                                            <h5>Jhon Doe</h5> <span class="sr-only">(current)</span>
+                                                            <h5>Jhon Doe</h5> <span className="sr-only">(current)</span>
                                                             <p>lorem</p>
                                                         </div>
                                                     </div>
                                                 </a>
                                                 <hr style={{margin:0}}/>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link active " href="#">
+                                            <li className="nav-item">
+                                                <a className="nav-link active " href="#">
                                                     <div className="row" style={{paddingTop:15,paddingBottom:0}}>
-                                                        <i class="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
+                                                        <i className="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
                                                         <div className="col-8">
-                                                            <h5>Rachel</h5> <span class="sr-only">(current)</span>
+                                                            <h5>Rachel</h5> <span className="sr-only">(current)</span>
                                                             <p>lorem</p>
                                                         </div>
                                                     </div>
                                                 </a>
                                                 <hr style={{margin:0}}/>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link active " href="#">
+                                            <li className="nav-item">
+                                                <a className="nav-link active " href="#">
                                                     <div className="row" style={{paddingTop:15,paddingBottom:0}}>
-                                                        <i class="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
+                                                        <i className="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
                                                         <div className="col-8">
-                                                            <h5>Angela</h5> <span class="sr-only">(current)</span>
+                                                            <h5>Angela</h5> <span className="sr-only">(current)</span>
                                                             <p>lorem</p>
                                                         </div>
                                                     </div>
                                                 </a>
                                                 <hr style={{margin:0}}/>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link active " href="#">
+                                            <li className="nav-item">
+                                                <a className="nav-link active " href="#">
                                                     <div className="row" style={{paddingTop:15,paddingBottom:0}}>
-                                                        <i class="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
+                                                        <i className="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
                                                         <div className="col-8">
-                                                            <h5>Andre</h5> <span class="sr-only">(current)</span>
+                                                            <h5>Andre</h5> <span className="sr-only">(current)</span>
                                                             <p>lorem</p>
                                                         </div>
                                                     </div>
                                                 </a>
                                                 <hr style={{margin:0}}/>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link active " href="#">
+                                            <li className="nav-item">
+                                                <a className="nav-link active " href="#">
                                                     <div className="row" style={{paddingTop:15,paddingBottom:0}}>
-                                                        <i class="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
+                                                        <i className="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
                                                         <div className="col-8">
-                                                            <h5>Steve</h5> <span class="sr-only">(current)</span>
+                                                            <h5>Steve</h5> <span className="sr-only">(current)</span>
                                                             <p>lorem</p>
                                                         </div>
                                                     </div>
                                                 </a>
                                                 <hr style={{margin:0}}/>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link active " href="#">
+                                            <li className="nav-item">
+                                                <a className="nav-link active " href="#">
                                                     <div className="row" style={{paddingTop:15,paddingBottom:0}}>
-                                                        <i class="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
+                                                        <i className="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
                                                         <div className="col-8">
-                                                            <h5>Emilia</h5> <span class="sr-only">(current)</span>
+                                                            <h5>Emilia</h5> <span className="sr-only">(current)</span>
                                                             <p>lorem</p>
                                                         </div>
                                                     </div>
                                                 </a>
                                                 <hr style={{margin:0}}/>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link active " href="#">
+                                            <li className="nav-item">
+                                                <a className="nav-link active " href="#">
                                                     <div className="row" style={{paddingTop:15,paddingBottom:0}}>
-                                                        <i class="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
+                                                        <i className="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
                                                         <div className="col-8">
-                                                            <h5>Angela</h5> <span class="sr-only">(current)</span>
+                                                            <h5>Angela</h5> <span className="sr-only">(current)</span>
                                                             <p>lorem</p>
                                                         </div>
                                                     </div>
@@ -147,67 +173,67 @@ class Dashboard extends Component{
                                             </li>
                                         </ul>
 
-                                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                                        <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                                         <span>Saved reports</span>
-                                        <a class="d-flex align-items-center text-muted" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-plus-circle" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="16" /><line x1="8" y1="12" x2="16" y2="12" /></svg>
+                                        <a className="d-flex align-items-center text-muted" href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-plus-circle" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="16" /><line x1="8" y1="12" x2="16" y2="12" /></svg>
                                         </a>
                                         </h6>
-                                        <ul class="nav flex-column mb-2">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
+                                        <ul className="nav flex-column mb-2">
+                                        <li className="nav-item">
+                                            <a className="nav-link" href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
                                             Current month
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
+                                        <li className="nav-item">
+                                            <a className="nav-link" href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
                                             Last quarter
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
+                                        <li className="nav-item">
+                                            <a className="nav-link" href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
                                             Social engagement
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
+                                        <li className="nav-item">
+                                            <a className="nav-link" href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
                                             Year-end sale
                                             </a>
                                         </li>
                                         </ul>
 
-                                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                                        <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                                         <span>Saved reports</span>
-                                        <a class="d-flex align-items-center text-muted" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-plus-circle" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="16" /><line x1="8" y1="12" x2="16" y2="12" /></svg>
+                                        <a className="d-flex align-items-center text-muted" href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-plus-circle" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="16" /><line x1="8" y1="12" x2="16" y2="12" /></svg>
                                         </a>
                                         </h6>
-                                        <ul class="nav flex-column mb-2">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
+                                        <ul className="nav flex-column mb-2">
+                                        <li className="nav-item">
+                                            <a className="nav-link" href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
                                             Current month
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
+                                        <li className="nav-item">
+                                            <a className="nav-link" href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
                                             Last quarter
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
+                                        <li className="nav-item">
+                                            <a className="nav-link" href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
                                             Social engagement
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
+                                        <li className="nav-item">
+                                            <a className="nav-link" href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
                                             Year-end sale
                                             </a>
                                         </li>
@@ -222,7 +248,7 @@ class Dashboard extends Component{
                                     <div className="container">
                                         <div className="row">
                                             <div className="col-12 row">
-                                                <i class="fas fa-user-circle" style={{fontSize:30,paddingTop:5,paddingRight:15}}></i>
+                                                <i className="fas fa-user-circle" style={{fontSize:30,paddingTop:5,paddingRight:15}}></i>
                                                 <div className="col-6 jumbotron" style={{padding:15}}>
                                                     <p>Hello, How are you?</p>
                                                 </div>
@@ -232,7 +258,7 @@ class Dashboard extends Component{
                                     <div className="container">
                                         <div className="row">
                                             <div className="col-12 row">
-                                                {/* <i class="fas fa-user-circle" style={{fontSize:30,paddingTop:5,paddingRight:15}}></i> */}
+                                                {/* <i className="fas fa-user-circle" style={{fontSize:30,paddingTop:5,paddingRight:15}}></i> */}
                                                 <div className="col-6 jumbotron" style={{padding:15,marginRight:0,left:'50%'}}>
                                                     <p>I'm fine. I heard you've become a developer, maybe we could work creating a startup?</p>
                                                 </div>
@@ -242,7 +268,7 @@ class Dashboard extends Component{
                                     <div className="container">
                                         <div className="row">
                                             <div className="col-12 row">
-                                                <i class="fas fa-user-circle" style={{fontSize:30,paddingTop:5,paddingRight:15}}></i>
+                                                <i className="fas fa-user-circle" style={{fontSize:30,paddingTop:5,paddingRight:15}}></i>
                                                 <div className="col-6 jumbotron" style={{padding:15}}>
                                                     <p></p>
                                                 </div>
@@ -253,11 +279,11 @@ class Dashboard extends Component{
                                         <center className="row">
                                             <center className="col-12 row">
                                                 <button className="btn btn-lg btn-cycle btn-success" style={{textAlign:'center'}}>
-                                                    <i class="fas fa-plus" style={{fontSize:24,marginLeft:-7}}></i>
+                                                    <i className="fas fa-plus" style={{fontSize:24,marginLeft:-7}}></i>
                                                 </button>
                                                 <input className="col-9 form-control form-chat" placeholder="Chatting..."></input>
                                                 <button className="btn btn-lg btn-cycle btn-info" style={{textAlign:'center'}}>
-                                                    <i class="fab fa-telegram-plane" style={{fontSize:24,marginLeft:-7}}></i>
+                                                    <i className="fab fa-telegram-plane" style={{fontSize:24,marginLeft:-7}}></i>
                                                 </button>
                                             </center>
                                         </center>
@@ -278,7 +304,8 @@ class Dashboard extends Component{
 }
 const mapStateToProps=(state)=>{
     return{
-        user:state.user
+        user:state.user,
+        uid:state.uid
     }
 }
 export default connect(mapStateToProps)(Dashboard);
