@@ -1,6 +1,7 @@
 let defaultState={
     user:null,
-    uid:""
+    uid:"",
+    chat:""
 }
 const reducers = (state = defaultState, action)=>{
     switch(action.type){
@@ -15,6 +16,10 @@ const reducers = (state = defaultState, action)=>{
         case "SET_UID":
             return Object.assign({},state,{
                 uid:action.payload
+            })
+        case "SET_CHAT":
+            return Object.assign({},state,{
+                chat:action.payload
             })
         default:
             return state;

@@ -20,6 +20,12 @@ export default{
             payload:uid
         }
     },
+    setChat(id){
+        return{
+            type:"SET_CHAT",
+            payload:id
+        }
+    },
     AuthenticationFirebase(email,password){
         return (dispatch)=>{
            return window.firebase.auth().signInWithEmailAndPassword(email,password)
@@ -42,6 +48,12 @@ export default{
         return (dispatch)=>{
             return dispatch(this.setUID(uid))
             }
+    },
+    getDbChatting(id){
+        return (dispatch)=>{
+            console.log(id);
+            return dispatch(this.setChat(id))
         }
     }
+}
     

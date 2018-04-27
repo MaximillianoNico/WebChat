@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import firebase from 'firebase';
 import './src/style.scss';
 import action from '../src/action';
+// import BoxChat from './BoxChat';
 class Dashboard extends Component{
     constructor(props){
         super(props);
@@ -11,8 +12,13 @@ class Dashboard extends Component{
             uid:'',
             name:'',
             totalChat:[],
-            userMessenger:[]
+            userMessenger:[],
+            contentChat:[],
+            userChat:[],
+            idChat:'',
+            currentUserChat:''
         }
+        this.setIdChat = this.setIdChat.bind(this);
     }
 
     componentDidMount(){
@@ -23,28 +29,129 @@ class Dashboard extends Component{
                     uid:user.uid
                 })
                 this.OnStateAuth();
-                alert("Welcome to WebChat : "+this.props.uid);
+                alert("Welcome to WebChat");
 
                 var dbUser = firebase.database().ref(`user/${this.props.uid}/`);
                 dbUser.on('value', snapshot =>{
                     this.setState({
                         userMessenger:snapshot.val(),
+                        totalChat:snapshot.val().chat
                     });
                 })
+                
             }else{
                 alert("Please Sign In before use WebChat");
                 window.location.href('/');
             }
         })
+        
+        
+    }
+    componentWillUpdate(){
+        
+    }
+    getDBChatting(){
+        this.state.totalChat.map((value,id)=>{
+            console.log("Chatting : "+value._idMessenger);
+        })
+    }
+    getUserChatting= (name) =>{
+        return name
     }
     OnStateAuth(){
         this.props.dispatch(
             action.OnAuthState(this.state.uid)
         )
     }
+    setIdChat(id){
+        this.setState({
+            idChat:id
+        })
+        // alert(id);
+        var getChat = firebase.database().ref(`messenger/${id}/`);
+        getChat.on('value',snapshot=>{
+            // console.log(snapshot.val().chat)
+            this.setState({
+                contentChat:snapshot.val().chat
+            })
+        })
+        // this.props.dispatch(
+        //     action.getDbChatting(id)
+        // )
+        console.log(this.state.idChat)
+        if(this.state.idChat===null){
+            alert("Error")
+        }
+    }
+    // RequestChatContent(){
+    //     this.props.dispatch(
+    //         action.getDbChatting(this.state.idChat)
+    //     )
+    // }
+    
     render(){
         if(this.props.user!= null){
-            console.log(this.state.userMessenger.email+" "+this.state.userMessenger.uid);
+            console.log(this.state.userMessenger.email);
+            const chating = this.state.contentChat.map((chat,id)=>{
+                console.log("User : "+chat._idUser+"\nchat : "+chat.content);
+                if(this.props.uid===chat._idUser){
+                    var stylesIcons = "fas fa-user-circle displayNone";
+                    var stylesChatBox = "col-6 jumbotron BoxChatRight";
+                    console.log("Equals UID");
+                }else{
+                    var stylesIcons = "fas fa-user-circle";
+                    var stylesChatBox = "col-6 jumbotron";
+                    // const current = chat.name;
+                    this.getUserChatting(chat.name)
+                    // alert(this.state.currentUserChat)
+                }
+                return (
+                    <div className="container">
+                                    <div className="row">
+                                        <div className="col-12 row">
+                                            <i className={stylesIcons} style={{fontSize:30,paddingTop:5,paddingRight:15}}></i>
+                                            <div className={stylesChatBox} style={{padding:15}}>
+                                                <p>{chat.content}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                )
+            })
+            const dataUsers = this.state.totalChat.map((value,id)=>{
+                // console.log("Chatting : "+value._idMessenger+"\nGroupName : "+value.groupName);
+                return (<li className="nav-item">
+                        <a className="nav-link active " href="#" 
+                            onClick={
+                                () =>{
+                                    this.setIdChat(value._idMessenger)
+                                } 
+                            }
+                                >
+                            <div className="row" style={{paddingTop:15,paddingBottom:0}}>
+                                <i className="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
+                                <div className="col-8">
+                                    <h5>{value.groupName}</h5> <span className="sr-only">(current)</span>
+                                    <p>lorem</p>
+                                </div>
+                            </div>
+                        </a>
+                        <hr style={{margin:0}}/>
+                    </li>)
+                        
+                
+                var chatDb = firebase.database().ref(`messenger/${value._idMessenger}/`);
+                chatDb.on('value',snapshot=>{
+                    snapshot.val().user.map((users,key)=>{
+                        // if(key>=0){
+                        console.log(users.userName);
+                        
+                        // }else{
+                            // alert("Error Display data")
+                        // }
+                    })
+                })
+            })
             return(
                 <div>
                     <nav className="navbar navbar-dark fixed-top bg-light flex-md-nowrap p-0 shadow">
@@ -69,7 +176,7 @@ class Dashboard extends Component{
                                     <i class="fas fa-user-circle" style={{fontSize:60,paddingTop:5}}></i>
                                 </div>
                                 <div className="col-11" style={{paddingTop:4}}>
-                                    <h2>Jhon Doe</h2>
+                                    <h2>{this.getUserChatting()}</h2>
                                     <p style={{margin:0}}>lorem</p>
                                 </div>
                             </div>
@@ -97,208 +204,31 @@ class Dashboard extends Component{
                                 <div className="container-fluid sidebar-sticky">
                                     <div className="sidebar-sticky">
                                         <ul className="nav flex-column">
-                                            <li className="nav-item">
-                                                <a className="nav-link active " href="#">
-                                                    <div className="row" style={{paddingTop:15,paddingBottom:0}}>
-                                                        <i className="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
-                                                        <div className="col-8">
-                                                            <h5>Jhon Doe</h5> <span className="sr-only">(current)</span>
-                                                            <p>lorem</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <hr style={{margin:0}}/>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a className="nav-link active " href="#">
-                                                    <div className="row" style={{paddingTop:15,paddingBottom:0}}>
-                                                        <i className="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
-                                                        <div className="col-8">
-                                                            <h5>Rachel</h5> <span className="sr-only">(current)</span>
-                                                            <p>lorem</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <hr style={{margin:0}}/>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a className="nav-link active " href="#">
-                                                    <div className="row" style={{paddingTop:15,paddingBottom:0}}>
-                                                        <i className="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
-                                                        <div className="col-8">
-                                                            <h5>Angela</h5> <span className="sr-only">(current)</span>
-                                                            <p>lorem</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <hr style={{margin:0}}/>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a className="nav-link active " href="#">
-                                                    <div className="row" style={{paddingTop:15,paddingBottom:0}}>
-                                                        <i className="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
-                                                        <div className="col-8">
-                                                            <h5>Andre</h5> <span className="sr-only">(current)</span>
-                                                            <p>lorem</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <hr style={{margin:0}}/>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a className="nav-link active " href="#">
-                                                    <div className="row" style={{paddingTop:15,paddingBottom:0}}>
-                                                        <i className="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
-                                                        <div className="col-8">
-                                                            <h5>Steve</h5> <span className="sr-only">(current)</span>
-                                                            <p>lorem</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <hr style={{margin:0}}/>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a className="nav-link active " href="#">
-                                                    <div className="row" style={{paddingTop:15,paddingBottom:0}}>
-                                                        <i className="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
-                                                        <div className="col-8">
-                                                            <h5>Emilia</h5> <span className="sr-only">(current)</span>
-                                                            <p>lorem</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <hr style={{margin:0}}/>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a className="nav-link active " href="#">
-                                                    <div className="row" style={{paddingTop:15,paddingBottom:0}}>
-                                                        <i className="fas fa-user-circle" style={{fontSize:50,padding:3}}></i>
-                                                        <div className="col-8">
-                                                            <h5>Angela</h5> <span className="sr-only">(current)</span>
-                                                            <p>lorem</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <hr style={{margin:0}}/>
-                                            </li>
-                                        </ul>
-
-                                        <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                                        <span>Saved reports</span>
-                                        <a className="d-flex align-items-center text-muted" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-plus-circle" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="16" /><line x1="8" y1="12" x2="16" y2="12" /></svg>
-                                        </a>
-                                        </h6>
-                                        <ul className="nav flex-column mb-2">
-                                        <li className="nav-item">
-                                            <a className="nav-link" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
-                                            Current month
-                                            </a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
-                                            Last quarter
-                                            </a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
-                                            Social engagement
-                                            </a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
-                                            Year-end sale
-                                            </a>
-                                        </li>
-                                        </ul>
-
-                                        <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                                        <span>Saved reports</span>
-                                        <a className="d-flex align-items-center text-muted" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-plus-circle" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="16" /><line x1="8" y1="12" x2="16" y2="12" /></svg>
-                                        </a>
-                                        </h6>
-                                        <ul className="nav flex-column mb-2">
-                                        <li className="nav-item">
-                                            <a className="nav-link" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
-                                            Current month
-                                            </a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
-                                            Last quarter
-                                            </a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
-                                            Social engagement
-                                            </a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="feather feather-file-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24"><path d="M 14 2 H 6 a 2 2 0 0 0 -2 2 v 16 a 2 2 0 0 0 2 2 h 12 a 2 2 0 0 0 2 -2 V 8 Z" /><polyline points="14,2 14,8 20,8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10,9 9,9 8,9" /></svg>
-                                            Year-end sale
-                                            </a>
-                                        </li>
+                                            {dataUsers}
                                         </ul>
 
                                     </div>
                                 </div>
                             </nav>
                             <main className="col-8 col-md-8 ml-sm-auto col-lg-8 px-4" style={{padding:10,overflowY:'scroll',overflowX:'hidden',height:'90vh'}} role="main">
-                                <div className="container-fluid" style={{marginTop:100,padding:0}}>
+                            <div className="container-fluid" style={{marginTop:100,padding:0}}>
                                 
-                                    <div className="container">
-                                        <div className="row">
-                                            <div className="col-12 row">
-                                                <i className="fas fa-user-circle" style={{fontSize:30,paddingTop:5,paddingRight:15}}></i>
-                                                <div className="col-6 jumbotron" style={{padding:15}}>
-                                                    <p>Hello, How are you?</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="container">
-                                        <div className="row">
-                                            <div className="col-12 row">
-                                                {/* <i className="fas fa-user-circle" style={{fontSize:30,paddingTop:5,paddingRight:15}}></i> */}
-                                                <div className="col-6 jumbotron" style={{padding:15,marginRight:0,left:'50%'}}>
-                                                    <p>I'm fine. I heard you've become a developer, maybe we could work creating a startup?</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="container">
-                                        <div className="row">
-                                            <div className="col-12 row">
-                                                <i className="fas fa-user-circle" style={{fontSize:30,paddingTop:5,paddingRight:15}}></i>
-                                                <div className="col-6 jumbotron" style={{padding:15}}>
-                                                    <p></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="container" style={{position:"fixed",bottom:10}}>
-                                        <center className="row">
-                                            <center className="col-12 row">
-                                                <button className="btn btn-lg btn-cycle btn-success" style={{textAlign:'center'}}>
-                                                    <i className="fas fa-plus" style={{fontSize:24,marginLeft:-7}}></i>
-                                                </button>
-                                                <input className="col-9 form-control form-chat" placeholder="Chatting..."></input>
-                                                <button className="btn btn-lg btn-cycle btn-info" style={{textAlign:'center'}}>
-                                                    <i className="fab fa-telegram-plane" style={{fontSize:24,marginLeft:-7}}></i>
-                                                </button>
-                                            </center>
+                                {chating}
+                                
+                                <div className="container" style={{position:"fixed",bottom:10}}>
+                                    <center className="row">
+                                        <center className="col-12 row">
+                                            <button className="btn btn-lg btn-cycle btn-success" style={{textAlign:'center'}}>
+                                                <i className="fas fa-plus" style={{fontSize:24,marginLeft:-7}}></i>
+                                            </button>
+                                            <input className="col-9 form-control form-chat" placeholder="Chatting..."></input>
+                                            <button className="btn btn-lg btn-cycle btn-info" style={{textAlign:'center'}}>
+                                                <i className="fab fa-telegram-plane" style={{fontSize:24,marginLeft:-7}}></i>
+                                            </button>
                                         </center>
-                                    </div>
+                                    </center>
                                 </div>
+                            </div>
                             </main>
                         </div>
                     </div>
@@ -315,7 +245,8 @@ class Dashboard extends Component{
 const mapStateToProps=(state)=>{
     return{
         user:state.user,
-        uid:state.uid
+        uid:state.uid,
+        chat:state.chat
     }
 }
 export default connect(mapStateToProps)(Dashboard);
