@@ -5,7 +5,7 @@ class logout extends Component{
     componentDidMount(){
         console.log("Running.....");
         window.firebase.auth().signOut().then(s=>{
-            window.location.href("/");
+            window.location.assign("/");
         }).catch(function(e){
             alert("error");
         })
