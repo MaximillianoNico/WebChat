@@ -15,15 +15,6 @@ class signIn extends Component{
         },
         this.AuthWithEmailAndPassword = this.AuthWithEmailAndPassword.bind(this);
     }
-    componentDidMount(){
-        const messaging = firebase.messaging();
-
-        // messaging.requestPermission().then(function(){
-        //     alert('Notification Permisson Grated')
-        // }).catch(function(err){
-        //     alert('Enable to get permission to notify'+err)
-        // })
-    }
 
     AuthWithEmailAndPassword= (e) =>{
         e.preventDefault();

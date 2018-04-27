@@ -2,8 +2,20 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
+##Testing WebChat
+For example, we can use admin account
+-> admin@weDev.com (Password nikomax149108) or
+-> admin@gameDev.com (Password nikomax149108)
+
+##Heroku Deploy
+Link -> https://aqueous-beach-46187.herokuapp.com/
+
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+
+
+
+
 
 ## Table of Contents
 
