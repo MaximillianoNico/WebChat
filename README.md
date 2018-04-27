@@ -1,11 +1,11 @@
-## WebChat
+ ## WebChat
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 ## Testing WebChat
-For example, we can use admin account
--> admin@weDev.com (Password nikomax149108) or
--> admin@gameDev.com (Password nikomax149108)
+For example, we can use admin account <br>
+-> admin@weDev.com (Password nikomax149108) or <br>
+-> admin@gameDev.com (Password nikomax149108) <br>
 
 ## Heroku Deploy
 Link -> https://aqueous-beach-46187.herokuapp.com/
