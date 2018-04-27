@@ -54,7 +54,7 @@ class Dashboard extends Component{
                 
             }else{
                 alert("Please Sign In before use WebChat");
-                window.location.href('/');
+                window.location.assign('/');
             }
         })
         
