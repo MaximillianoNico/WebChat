@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto');
+$roboto-sans: 'Roboto', sans-serif;
+$montserrat:'Montserrat', sans-serif;
+
+.contain-box{
+    margin-top : 10%;
+    .form-control{
+        border-radius:50px;
+        height: 45px;
+        text-align: center;
+        font-family: $roboto-sans;
+    }
+    .btn{
+        border-radius:50px;
+        width: 50%;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+    form{
+        padding-top: 5%;
+        input{
+            display: block;
+            border: none;
+            padding: 10px 0;
+            width: 80%;
+            border-bottom: solid 1px #2196f3;
+            -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+            transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+            background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 96%, #1abc9c 4%);
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #1abc9c 4%);
+            background-position: -200px 0;
+            background-size: 200px 100%;
+            background-repeat: no-repeat;
+            color: #0e6252;
+            text-align: center;
+            &focus{
+                box-shadow: none;
+                outline: none;
+            }
+        }
+    }
+    .btn-icons{
+        width: 50px;
+        height: 50px;
+    }
+    .google-icons{
+        background-color: #ff5733;
+        border-color: #ff5733;
+        color: white;
+        &:hover{
+            background-color: #f8866d;
+        }
+    }
+    .instagram-icons{
+        background-color: #f96565;
+        border-color: #f96565;
+    }
+    .right{
+        background-color: #2196f3;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 50px;
+        h1{
+            color:white;
+            font-family: $montserrat;
+        }
+        i{
+            color: white;
+            font-size: 150px;
+            padding-bottom: 30px;
+        }
+    }    
+    .left{
+        background-color: #f3f0f0;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        border-top-right-radius: 50px;
+        h1{
+            color: #2196f3;
+        }
+    }
+    .scrollbar{
+        overflow-y: scroll !important;
+        height: 100%;
+    }
+}
+
+.form-chat{
+    border-radius: 50px;
+}
+.btn-cycle{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+a{
+    color: black;
+}
+.icons-nav{
+    text-decoration: none;
+    color: white;
+    transition: 0.8s ease-in-out;
+    &hover{
+        color:gray;
+    }
+}
+.bg-grey{
+    background-color: #e0e0e0;
+}
+.BoxChatRight{
+    padding:15 !important;
+    margin-right:0;
+    left:50%
+}
+.displayNone{
+    display: none;
+}
+

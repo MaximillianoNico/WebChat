@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
 import action from './../src/action';
 import {connect} from 'react-redux';
+import firebase from 'firebase';
 
 class signIn extends Component{
     constructor(props){
@@ -14,12 +15,20 @@ class signIn extends Component{
         },
         this.AuthWithEmailAndPassword = this.AuthWithEmailAndPassword.bind(this);
     }
+    componentDidMount(){
+        const messaging = firebase.messaging();
+
+        // messaging.requestPermission().then(function(){
+        //     alert('Notification Permisson Grated')
+        // }).catch(function(err){
+        //     alert('Enable to get permission to notify'+err)
+        // })
+    }
 
     AuthWithEmailAndPassword= (e) =>{
         e.preventDefault();
         let email = e.target.inputEmail.value;
         let password = e.target.inputPassword.value;
-        // alert(email);
         this.props.dispatch(
             action.AuthenticationFirebase(email,password)
         )
@@ -51,7 +60,7 @@ class signIn extends Component{
                     or Sign In With
                 </p>
                 <center className="mb-2">
-                    <div className="row col-6">
+                    <div className="row col-7">
                         <button className="btn btn-lg btn-primary btn-icons fb-icons">
                             <i className="fab fa-facebook-f"></i>
                         </button>

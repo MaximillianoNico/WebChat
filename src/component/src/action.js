@@ -33,7 +33,7 @@ export default{
                alert("Success");
                return (
                    dispatch(this.setUser(res.data)),
-                    window.location.href("/dashboard")
+                    window.location.assign("/dashboard")
                )
            })
            .catch(err=>{
@@ -49,10 +49,9 @@ export default{
             return dispatch(this.setUID(uid))
             }
     },
-    getDbChatting(id){
+    getDbChatting(idchat){
         return (dispatch)=>{
-            console.log(id);
-            return dispatch(this.setChat(id))
+            return dispatch(this.setUser(idchat))
         }
     }
 }

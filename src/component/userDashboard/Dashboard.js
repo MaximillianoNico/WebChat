@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import firebase from 'firebase';
 import './src/style.scss';
 import action from '../src/action';
-// import BoxChat from './BoxChat';
+
 class Dashboard extends Component{
     constructor(props){
         super(props);
@@ -15,7 +15,7 @@ class Dashboard extends Component{
             userMessenger:[],
             contentChat:[],
             userChat:[],
-            idChat:'',
+            idChat:[],
             currentUserChat:''
         }
         this.setIdChat = this.setIdChat.bind(this);
@@ -23,19 +23,32 @@ class Dashboard extends Component{
 
     componentDidMount(){
         
+        var messaging = firebase.messaging();
+        messaging.requestPermission().then(function(){
+            alert('Notification Permisson Grated')
+        }).catch(function(err){
+            alert('Enable to get permission to notify'+err)
+        })
+        messaging.onTokenRefresh(function(){
+            messaging.getToken().then(function(refreshedToken){
+                alert(refreshedToken);
+            })
+        })
         firebase.auth().onAuthStateChanged((user)=>{
             if(user){           
                 this.setState({
                     uid:user.uid
                 })
                 this.OnStateAuth();
+                // this.setIdChat();
                 alert("Welcome to WebChat");
 
                 var dbUser = firebase.database().ref(`user/${this.props.uid}/`);
                 dbUser.on('value', snapshot =>{
                     this.setState({
                         userMessenger:snapshot.val(),
-                        totalChat:snapshot.val().chat
+                        totalChat:snapshot.val().chat,
+                        name:snapshot.val().name
                     });
                 })
                 
@@ -47,48 +60,37 @@ class Dashboard extends Component{
         
         
     }
-    componentWillUpdate(){
-        
-    }
-    getDBChatting(){
-        this.state.totalChat.map((value,id)=>{
-            console.log("Chatting : "+value._idMessenger);
-        })
-    }
-    getUserChatting= (name) =>{
-        return name
-    }
     OnStateAuth(){
         this.props.dispatch(
             action.OnAuthState(this.state.uid)
         )
     }
-    setIdChat(id){
+    setIdChat=(id)=>{
         this.setState({
             idChat:id
         })
-        // alert(id);
+        
         var getChat = firebase.database().ref(`messenger/${id}/`);
         getChat.on('value',snapshot=>{
-            // console.log(snapshot.val().chat)
             this.setState({
                 contentChat:snapshot.val().chat
             })
         })
-        // this.props.dispatch(
-        //     action.getDbChatting(id)
-        // )
-        console.log(this.state.idChat)
-        if(this.state.idChat===null){
-            alert("Error")
-        }
     }
-    // RequestChatContent(){
-    //     this.props.dispatch(
-    //         action.getDbChatting(this.state.idChat)
-    //     )
-    // }
-    
+    postMessage = (e) =>{
+        e.preventDefault();
+
+        let messege = e.target.inputChat.value;
+        
+        var addChat = firebase.database().ref(`messenger/${this.state.idChat}/chat/${this.state.contentChat.length}`)
+        addChat.set({
+            _idUser:this.state.uid,
+            content:messege,
+            name:this.state.name,
+            time: `${new Date().getHours()}:${new Date().getMinutes()}`
+        })
+        var messaging = firebase.messaging();
+    }
     render(){
         if(this.props.user!= null){
             console.log(this.state.userMessenger.email);
@@ -101,9 +103,6 @@ class Dashboard extends Component{
                 }else{
                     var stylesIcons = "fas fa-user-circle";
                     var stylesChatBox = "col-6 jumbotron";
-                    // const current = chat.name;
-                    this.getUserChatting(chat.name)
-                    // alert(this.state.currentUserChat)
                 }
                 return (
                     <div className="container">
@@ -119,12 +118,13 @@ class Dashboard extends Component{
                 )
             })
             const dataUsers = this.state.totalChat.map((value,id)=>{
-                // console.log("Chatting : "+value._idMessenger+"\nGroupName : "+value.groupName);
+                
                 return (<li className="nav-item">
                         <a className="nav-link active " href="#" 
                             onClick={
                                 () =>{
                                     this.setIdChat(value._idMessenger)
+                                    
                                 } 
                             }
                                 >
@@ -143,12 +143,8 @@ class Dashboard extends Component{
                 var chatDb = firebase.database().ref(`messenger/${value._idMessenger}/`);
                 chatDb.on('value',snapshot=>{
                     snapshot.val().user.map((users,key)=>{
-                        // if(key>=0){
                         console.log(users.userName);
                         
-                        // }else{
-                            // alert("Error Display data")
-                        // }
                     })
                 })
             })
@@ -176,7 +172,7 @@ class Dashboard extends Component{
                                     <i class="fas fa-user-circle" style={{fontSize:60,paddingTop:5}}></i>
                                 </div>
                                 <div className="col-11" style={{paddingTop:4}}>
-                                    <h2>{this.getUserChatting()}</h2>
+                                    <h2></h2>
                                     <p style={{margin:0}}>lorem</p>
                                 </div>
                             </div>
@@ -215,19 +211,19 @@ class Dashboard extends Component{
                                 
                                 {chating}
                                 
-                                <div className="container" style={{position:"fixed",bottom:10}}>
+                                <form className="container" style={{position:"fixed",bottom:10}} onSubmit={this.postMessage}>
                                     <center className="row">
                                         <center className="col-12 row">
                                             <button className="btn btn-lg btn-cycle btn-success" style={{textAlign:'center'}}>
                                                 <i className="fas fa-plus" style={{fontSize:24,marginLeft:-7}}></i>
                                             </button>
-                                            <input className="col-9 form-control form-chat" placeholder="Chatting..."></input>
-                                            <button className="btn btn-lg btn-cycle btn-info" style={{textAlign:'center'}}>
+                                            <input id="inputChat"className="col-9 form-control form-chat" placeholder="Chatting..."></input>
+                                            <button type="submit" className="btn btn-lg btn-cycle btn-info" style={{textAlign:'center'}}>
                                                 <i className="fab fa-telegram-plane" style={{fontSize:24,marginLeft:-7}}></i>
                                             </button>
                                         </center>
                                     </center>
-                                </div>
+                                </form>
                             </div>
                             </main>
                         </div>
@@ -236,7 +232,6 @@ class Dashboard extends Component{
             )
         }else{
             return(
-                // <Redirect exact from="/dasboard" to="/"/>
                 <h1></h1>
             )
         }
