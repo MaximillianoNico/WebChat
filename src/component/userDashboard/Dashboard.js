@@ -217,7 +217,7 @@ class Dashboard extends Component{
                                             <button className="btn btn-lg btn-cycle btn-success" style={{textAlign:'center'}}>
                                                 <i className="fas fa-plus" style={{fontSize:24,marginLeft:-7}}></i>
                                             </button>
-                                            <input id="inputChat"className="col-9 form-control form-chat" placeholder="Chatting..."></input>
+                                            <input id="inputChat"className="col-8 form-control form-chat" placeholder="Chatting..."></input>
                                             <button type="submit" className="btn btn-lg btn-cycle btn-info" style={{textAlign:'center'}}>
                                                 <i className="fab fa-telegram-plane" style={{fontSize:24,marginLeft:-7}}></i>
                                             </button>
